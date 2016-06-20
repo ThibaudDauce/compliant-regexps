@@ -1,5 +1,7 @@
 # Compliant Regexps
 
+[![Build Status](https://travis-ci.org/ThibaudDauce/compliant-regexps.svg?branch=master)](https://travis-ci.org/ThibaudDauce/compliant-regexps)
+
 The main goal of this library is to provide an easy way to correct user input based on regular expressions.
 
 ## Installation
