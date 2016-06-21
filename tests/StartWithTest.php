@@ -16,23 +16,28 @@ class StartWithTest extends ConciliatorTest
             'Start with « Flat »' => [
                 'regexp' => '/^Flat [ABCDEFGHIJ](-?)\d{3}$/',
                 'input' => 'J114',
-                'output' => ['Flat J114'],
+                'output' => ['J114', 'Flat J114'],
             ],
             'Raw like « <space>J114 »' => [
                 'regexp' => '/^Flat [ABCDEFGHIJ](-?)\d{3}$/',
                 'input' => ' J114',
-                'output' => ['Flat J114'],
+                'output' => [' J114', 'Flat J114'],
             ],
             'Regexp with an accent' => [
                 'regexp' => '/^Résidence Madrillet [ABCDEFGHIJ](-?)\d{3}$/',
                 'input' => 'J114',
-                'output' => ['Résidence Madrillet J114'],
+                'output' => ['J114', 'Résidence Madrillet J114'],
             ],
             'Regexp with a dash' => [
                 'regexp' => '/^Madrillet — [ABCDEFGHIJ](-?)\d{3}$/',
                 'input' => 'J114',
-                'output' => ['Madrillet — J114'],
+                'output' => ['J114', 'Madrillet — J114'],
             ],
+            'Replace start with' => [
+                'regexp' => '/^Flat [ABCDEFGHIJ](-?)\d{3}$/',
+                'input' => 'My J114',
+                'output' => ['My J114', 'Flat My J114', 'Flat J114'],
+            ]
         ];
     }
 }

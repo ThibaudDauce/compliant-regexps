@@ -6,11 +6,19 @@ class StartWith implements Conciliator
 {
     public function conciliate(string $regexp, string $string): array
     {
+        $possibilities = [$string];
+
         preg_match('/^\/\^(?P<start_with>[\w\séèàçê-–—,;]+)(?!\w)/', $regexp, $matches);
         $startWith = $matches['start_with'];
 
-        $newString = $this->fusion($startWith, $string);
-        return [$newString];
+        $variablePartRegexp = '/(?P<wrong_start>.*)' . substr($regexp, strlen($startWith) + strlen('/^'));
+        if (preg_match($variablePartRegexp, $string, $newMatch)) {
+            $onlyVariablePart = substr($string, strlen($newMatch['wrong_start']));
+            $possibilities[] = $this->fusion($startWith, $onlyVariablePart);
+        }
+
+        $possibilities[] = $this->fusion($startWith, $string);
+        return array_unique($possibilities);
     }
 
     private function fusion(string $stringA, string $stringB): string
