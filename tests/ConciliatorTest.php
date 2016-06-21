@@ -28,7 +28,7 @@ abstract class ConciliatorTest extends PHPUnit_Framework_TestCase
         sort($output);
         sort($possibilities);
 
-        $this->assertEquals($possibilities, $output);
+        $this->assertEquals(array_values($possibilities), array_values($output));
     }
 
     abstract protected function getConciliator(): Conciliator;
