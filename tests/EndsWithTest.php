@@ -18,6 +18,11 @@ class EndsWithTest extends ConciliatorTest
                 'input' => 'Flat J114 a',
                 'output' => ['Flat J114 a', 'Flat J114 a b', 'Flat J114 b'],
             ],
+            'Ends with " 9" instead of nothing' => [
+                'regexp' => '/^Flat [DEFGHIJ]\d{3}$/',
+                'input' => 'Flat J114 9',
+                'output' => ['Flat J114 9', 'Flat J114'],
+            ],
             'Ends with nothing' => [
                 'regexp' => '/^Flat [DEFGHIJ]\d{1,3}$/',
                 'input' => 'Flat madrilles',

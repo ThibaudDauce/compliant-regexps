@@ -8,7 +8,7 @@ class StartWith implements Conciliator
     {
         $possibilities = [$string];
 
-        if (preg_match('/^\/\^(?P<start_with>[\w\séèàçê-–—,;\.]+)(?!\w)/', $regexp, $matches)) {
+        if (preg_match('/^\/\^(?P<start_with>[\w\séèàçê-–—,;\.]*)(?!\w)/', $regexp, $matches)) {
             $startWith = $matches['start_with'];
 
             $variablePartRegexp = '/(?P<wrong_start>.*)' . substr($regexp, strlen($startWith) + strlen('/^'));
@@ -19,7 +19,7 @@ class StartWith implements Conciliator
 
             $possibilities[] = $this->fusion($startWith, $string);
         }
-        
+
         return array_unique($possibilities);
     }
 
