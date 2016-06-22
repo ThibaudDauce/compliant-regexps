@@ -8,18 +8,19 @@ class Uppercase implements Conciliator
     {
         $possibilities = [$string];
 
-        preg_match('/\[(?P<variable>.*)\]/', $regexp, $matches);
-        $inverseVariable = $this->inverseCase($matches['variable']);
+        if (preg_match('/\[(?P<variable>.*)\]/', $regexp, $matches)) {
+            $inverseVariable = $this->inverseCase($matches['variable']);
 
-        $newRegexp = preg_replace('/\[(?P<variable>.*)\]/', "[$inverseVariable]", $regexp);
-        if (preg_match($newRegexp, $string)) {
-            $charactersOnly = trim($newRegexp, '/');
-            if ($charactersOnly[0] === '^') {
-                $charactersOnly = substr($charactersOnly, 1);
+            $newRegexp = preg_replace('/\[(?P<variable>.*)\]/', "[$inverseVariable]", $regexp);
+            if (preg_match($newRegexp, $string)) {
+                $charactersOnly = trim($newRegexp, '/');
+                if ($charactersOnly[0] === '^') {
+                    $charactersOnly = substr($charactersOnly, 1);
+                }
+
+                $variablePosition = strpos($charactersOnly, "[$inverseVariable]");
+                $possibilities[] = substr_replace($string, $this->inverseCase($string[$variablePosition]), $variablePosition, 1);
             }
-
-            $variablePosition = strpos($charactersOnly, "[$inverseVariable]");
-            $possibilities[] = substr_replace($string, $this->inverseCase($string[$variablePosition]), $variablePosition, 1);
         }
 
         return $possibilities;

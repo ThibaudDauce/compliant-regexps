@@ -13,11 +13,16 @@ class UppercaseTest extends ConciliatorTest
     public function data(): array
     {
         return [
-            [
+            'Change case of the variable part' => [
                 'regexp' => '/^Flat [DEFGHIJ]\d{1,3}$/',
                 'input' => 'Flat j114',
                 'output' => ['Flat j114', 'Flat J114'],
-            ]
+            ],
+            'Do nothing if there is no variable part' => [
+                'regexp' => '/^Flat \d{1,3}$/',
+                'input' => 'flat 114',
+                'output' => ['flat 114'],
+            ],
         ];
     }
 }
