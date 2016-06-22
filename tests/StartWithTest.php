@@ -37,7 +37,12 @@ class StartWithTest extends ConciliatorTest
                 'regexp' => '/^Flat [ABCDEFGHIJ](-?)\d{3}$/',
                 'input' => 'My J114',
                 'output' => ['My J114', 'Flat My J114', 'Flat J114'],
-            ]
+            ],
+            'Starts with nothing' => [
+                'regexp' => '/^[DEFGHIJ]\d{1,3} flat.$/',
+                'input' => 'Flat madrilles',
+                'output' => ['Flat madrilles'],
+            ],
         ];
     }
 }

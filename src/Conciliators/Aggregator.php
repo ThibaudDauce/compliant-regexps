@@ -45,11 +45,11 @@ class Aggregator implements Conciliator
             $newPossibilities = $possibilities;
             unset($newConciliators[$key]);
             foreach ($possibilities as $possibility) {
-                foreach ($conciliator->conciliate($regexp, $possibility) as $newPossibility) {
-                    $newPossibilities[] = $newPossibility;
+                foreach ($conciliator->conciliate($regexp, $possibility) as $newPossibilitiesFromConciliator) {
+                    $newPossibilities[] = $newPossibilitiesFromConciliator;
                 }
             }
-            $newResults[] = $this->aggregate($regexp, $newPossibilities, $newConciliators);
+            $newResults[] = $this->aggregate($regexp, array_unique($newPossibilities), $newConciliators);
             $newConciliators[$key] = $conciliator;
         }
 
