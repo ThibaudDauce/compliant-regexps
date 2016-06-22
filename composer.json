@@ -1,7 +1,7 @@
 {
     "name": "thibaud-dauce/compliant-regexps",
     "description": "An easy way to correct user input based on a regular expression",
-    "version": "1.4.2",
+    "version": "1.5.0",
     "type": "library",
     "homepage": "https://github.com/ThibaudDauce/compliant-regexps",
     "keywords": ["regexps"],
