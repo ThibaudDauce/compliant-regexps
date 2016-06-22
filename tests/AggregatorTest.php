@@ -1,6 +1,7 @@
 <?php declare(strict_types = 1);
 
 use ThibaudDauce\CompliantRegexps\Conciliators\Aggregator;
+use ThibaudDauce\CompliantRegexps\Conciliators\EndsWith;
 use ThibaudDauce\CompliantRegexps\Conciliators\StartWith;
 use ThibaudDauce\CompliantRegexps\Conciliators\WhiteSpace;
 
@@ -37,5 +38,14 @@ class AggregatorTest extends PHPUnit_Framework_TestCase
             'FlatJ 114',
             'Flat J114',
         ], $possibilities);
+    }
+
+    /** @test */
+    public function it_aggregates_starts_and_ends_with()
+    {
+        $conciliator = new Aggregator([new StartWith, new EndsWith]);
+        $possibilities = $conciliator->conciliate('/^Flat [ABC]\d{3}$/', 'Flot A114 A');
+
+        $this->assertContains('Flat A114', $possibilities);
     }
 }

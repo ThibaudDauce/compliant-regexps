@@ -28,6 +28,11 @@ class EndsWithTest extends ConciliatorTest
                 'input' => 'Flat madrilles',
                 'output' => ['Flat madrilles'],
             ],
+//            'Replace even if there is something at the beginning' => [
+//                'regexp' => '/^Flat [ABC]\d{1,3}.$/',
+//                'input' => 'Building A114 A',
+//                'output' => ['Building A114 A', 'Building A114 A.', 'Building A114.'],
+//            ],
         ];
     }
 }

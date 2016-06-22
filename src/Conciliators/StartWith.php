@@ -11,7 +11,7 @@ class StartWith implements Conciliator
         if (preg_match('/^\/\^(?P<start_with>[\w\séèàçê-–—,;\.]*)(?!\w)/', $regexp, $matches)) {
             $startWith = $matches['start_with'];
 
-            $variablePartRegexp = '/(?P<wrong_start>.*)' . substr($regexp, strlen($startWith) + strlen('/^'));
+            $variablePartRegexp = '/(?P<wrong_start>.*)' . substr($regexp, strlen($startWith) + strlen('/^'), -2) . '/';
             if (preg_match($variablePartRegexp, $string, $newMatch)) {
                 $onlyVariablePart = substr($string, strlen($newMatch['wrong_start']));
                 $possibilities[] = $this->fusion($startWith, $onlyVariablePart);
