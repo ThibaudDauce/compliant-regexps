@@ -48,6 +48,11 @@ class StartWithTest extends ConciliatorTest
                 'input' => 'Building A114 A',
                 'output' => ['Building A114 A', 'Flat A114 A', 'Flat Building A114 A'],
             ],
+            'Fusion keeps initial 0' => [
+                'regexp' => '/^Flat \d{1,3}$/',
+                'input' => '002',
+                'output' => ['002', 'Flat 002', 'Flat 2'],
+            ],
         ];
     }
 }
