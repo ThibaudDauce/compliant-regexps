@@ -2,22 +2,21 @@
 
 namespace ThibaudDauce\CompliantRegexps\Conciliators;
 
-class StartWith implements Conciliator
+class EndsWith implements Conciliator
 {
     public function conciliate(string $regexp, string $string): array
     {
         $possibilities = [$string];
 
-        preg_match('/^\/\^(?P<start_with>[\w\séèàçê-–—,;\.]+)(?!\w)/', $regexp, $matches);
-        $startWith = $matches['start_with'];
-
-        $variablePartRegexp = '/(?P<wrong_start>.*)' . substr($regexp, strlen($startWith) + strlen('/^'));
+        preg_match('/(?!\w\.\!\s)(?P<ends_with>[\w\séèàçê-–—,;\.]*)\$\/$/', $regexp, $matches);
+        $endsWith = $matches['ends_with'];
+        $variablePartRegexp = substr($regexp, 0, strlen($regexp) - (strlen($endsWith) + strlen('$/'))) . '(?P<wrong_end>.*)/';
         if (preg_match($variablePartRegexp, $string, $newMatch)) {
-            $onlyVariablePart = substr($string, strlen($newMatch['wrong_start']));
-            $possibilities[] = $this->fusion($startWith, $onlyVariablePart);
+            $onlyVariablePart = substr($string, 0, strlen($string) - strlen($newMatch['wrong_end']));
+            $possibilities[] = $this->fusion($onlyVariablePart, $endsWith);
         }
 
-        $possibilities[] = $this->fusion($startWith, $string);
+        $possibilities[] = $this->fusion($string, $endsWith);
         return array_unique($possibilities);
     }
 
