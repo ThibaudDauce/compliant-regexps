@@ -53,6 +53,11 @@ class StartWithTest extends ConciliatorTest
                 'input' => '002',
                 'output' => ['002', 'Flat 002', 'Flat 2'],
             ],
+            'Keep the maximum of digit (lazy wildcard)' => [
+                'regexp' => '/^Flat \d{1,3}$/',
+                'input' => 'DD002',
+                'output' => ['DD002', 'Flat 2', 'Flat DD002', 'Flat 002'],
+            ],
         ];
     }
 }

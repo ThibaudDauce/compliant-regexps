@@ -8,12 +8,17 @@ class StartWith implements Conciliator
     {
         $possibilities = [$string];
 
-
         if (preg_match('/^\/\^(?P<start_with>[\w\séèàçê-–—,;\.]*)(?!\w)/', $regexp, $matches)) {
             $startWith = $matches['start_with'];
             $possibilities[] = $this->fusion($startWith, $string);
 
-            $variablePartRegexp = '/(?P<wrong_start>.*)' . substr($regexp, strlen($startWith) + strlen('/^'), -2) . '/';
+            $variablePartRegexp = $this->getVariablePartRegexp($regexp, $startWith, false);
+            if (preg_match($variablePartRegexp, $string, $newMatch)) {
+                $onlyVariablePart = substr($string, strlen($newMatch['wrong_start']));
+                $possibilities[] = $this->fusion($startWith, $onlyVariablePart);
+            }
+
+            $variablePartRegexp = $this->getVariablePartRegexp($regexp, $startWith, true);
             if (preg_match($variablePartRegexp, $string, $newMatch)) {
                 $onlyVariablePart = substr($string, strlen($newMatch['wrong_start']));
                 $possibilities[] = $this->fusion($startWith, $onlyVariablePart);
@@ -42,4 +47,10 @@ class StartWith implements Conciliator
 
         return $stringA . substr($stringB, $i);
     }
+
+    private function getVariablePartRegexp($baseRegexp, $nonVariablePart, $lazy = true)
+    {
+        return '/(?P<wrong_start>.*' . ($lazy ?  '?' : '') . ')' . substr($baseRegexp, strlen($nonVariablePart) + strlen('/^'), -2) . '/';
+    }
+
 }
